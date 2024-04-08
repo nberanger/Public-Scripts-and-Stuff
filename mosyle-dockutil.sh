@@ -66,7 +66,7 @@ sudo -u "$currentUser" /usr/local/bin/dockutil --add "/Applications/Microsoft Ex
 sudo -u "$currentUser" /usr/local/bin/dockutil --add "/Applications/Microsoft PowerPoint.app" --no-restart /Users/$currentUser
 sudo -u "$currentUser" /usr/local/bin/dockutil --add "/Applications/Dropbox.app" --no-restart /Users/$currentUser
 sudo -u "$currentUser" /usr/local/bin/dockutil --add "/Applications/1Password.app" --no-restart /Users/$currentUser
-sudo -u "$currentUser" /usr/local/bin/dockutil --add "/System/Applications/Managed Software Center.app" --no-restart /Users/$currentUser
+# sudo -u "$currentUser" /usr/local/bin/dockutil --add "/System/Applications/Managed Software Center.app" --no-restart /Users/$currentUser
 sudo -u "$currentUser" /usr/local/bin/dockutil --add "/Applications/Self-Service.app" --no-restart /Users/$currentUser
 
 sudo -u "$currentUser" /usr/local/bin/dockutil --add "/Users/$currentUser/Downloads/" --view auto --display stack --sort dateadded --section others --no-restart /Users/$currentUser
