@@ -7,6 +7,7 @@
 # It was written to be used as a custom attribute in Moysle
 # If the computer model matches the pattern then a value of 'YES' is returned, otherwise the value is 'NO'
 # talkingmoose maintains a regex list here: https://gist.github.com/talkingmoose/1b852e5d4fc8e76b4400ca2e4b3f3ad0#file-sonoma-compatible-macs-regex
+#   - from the regex patterns he has listed, be sure to remove the `\d`as they do not appear to work when using the script.
 #####
 # version 1.0, nberanger, June 21, 2024
 #####
