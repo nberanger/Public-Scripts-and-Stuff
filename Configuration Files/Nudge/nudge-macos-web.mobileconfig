@@ -6,7 +6,7 @@
 		<array>
 			<dict>
 				<key>json-url</key>
-				<string>https://raw.githubusercontent.com/BiosPlus/Pub-Files/main/Configuration%20Files/Nudge/com.github.macadmins.Nudge.json</string>
+				<string>https://github.com/nberanger/PublicScripts/blob/ca754a304d02037806f38f6ec899edc50aae29d4/Configuration%20Files/Nudge/com.github.macadmins.Nudge.json</string>
 				<key>PayloadDisplayName</key>
 				<string>Nudge - Web Based Configuration</string>
 				<key>PayloadIdentifier</key>
