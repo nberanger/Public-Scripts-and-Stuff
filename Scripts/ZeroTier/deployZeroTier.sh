@@ -60,7 +60,7 @@ ZEROTIER_API_TOKEN="api-token-here"
 ZEROTIER_NETWORK_ID="network-id-here"
 
 # Slack webhook URL for notifications (optional, leave empty to disable Slack notifications)
-SLACK_WEBHOOK="slack-webhook-url-here"
+SLACK_WEBHOOK=""
 
 # Log file path (optional, default is /var/log/deployZeroTier.log)
 LOG_FILE="/var/log/deployZeroTier.log"
