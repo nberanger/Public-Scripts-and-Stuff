@@ -8,7 +8,7 @@
 # 2. Connect it to a specified network
 # 3. Authorize the device on that network
 # 4. Assign the local hostname to the device in ZeroTier Central
-# 5. Send a formatted Slack notification with the deployment status
+# 5. Send a formatted Slack notification with the deployment status (if a webhook is provided)
 #####
 # version 3.1 October 4, 2024 - nberanger
 #####
