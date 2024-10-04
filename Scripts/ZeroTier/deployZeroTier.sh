@@ -47,7 +47,7 @@
 # - added enhanced retry mechanism for API calls with exponential backoff
 # - removed dependency on 'jq', using native tools 'grep' and 'sed' for JSON processing instead
 # - updated logging to be consistent and more informative throughout the entire script
-# - added check for Slack webhook URL and only attempt to send notification if it is set
+# - added check for Slack webhook URL, only attempt to send notifications if it is set
 ####
 
 #####
