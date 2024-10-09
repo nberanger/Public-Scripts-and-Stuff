@@ -48,7 +48,11 @@
 # - removed dependency on 'jq', using native tools 'grep' and 'sed' for JSON processing instead
 # - updated logging to be consistent and more informative throughout the entire script
 # - added check for Slack webhook URL, only attempt to send notifications if it is set
-####
+#
+# 3.2 October 9, 2024 - nberanger
+# - removed the removal and reinstallation process
+# - replaced with section to install/update without uninstalling first, in order to preserve any existing configuration
+#####
 
 #####
 # Configuration Variables
@@ -344,7 +348,12 @@ case $zerotier_status in
         ;;
     2)
         log_message "ZeroTier needs to be updated."
-        remove_zerotier
+        # Commented out the removal and reinstallation process
+        # remove_zerotier
+        # install_zerotier || success=false
+        
+        # Install/update without uninstalling first in order to preserve any existing configuration
+        log_message "Updating ZeroTier without uninstalling."
         install_zerotier || success=false
         ;;
     3)
