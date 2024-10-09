@@ -10,7 +10,7 @@
 # 4. Assign the local hostname to the device in ZeroTier Central
 # 5. Send a formatted Slack notification with the deployment status (if a webhook is provided)
 #####
-# version 3.1 October 4, 2024 - nberanger
+# version 3.2 October 9, 2024 - nberanger
 #####
 # Revision notes:
 #
