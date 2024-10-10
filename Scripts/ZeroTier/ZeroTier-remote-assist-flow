@@ -1,0 +1,41 @@
+
+# Only allows ADMIN devices full access.
+# In order to use ARD to connect to a Mac device, the device must be assigned the ARD capability
+# In order to use RDP to connect to a Windows device, the device must be assigned the RDP capability
+
+
+# This first section is a the default drop rule set from ZeroTier. It allows IPv4 and IPv6 traffic but otherwise
+# behaves like a standard Ethernet switch:
+
+drop
+	not ethertype ipv4
+	and not ethertype arp
+	and not ethertype ipv6
+;
+
+# ADMIN, allows access to all devices on the network
+cap admin
+  id 999
+  accept;
+  ;
+
+# ARD, allows ARD access to a device with this assigned capability
+cap ard
+  id 11
+  accept ethertype arp; # Allow ARP for device discovery
+  accept ipprotocol tcp and dport 5900-5902; # Allow VNC ports
+  accept ipprotocol udp and dport 5900-5902; # Allow VNC ports (UDP)
+  accept ipprotocol udp and sport 5900-5902; # Allow return traffic
+  ;
+
+# RDP, allows RDP access to Windows devices with this assigned capability
+cap rdp
+  id 12
+  accept ethertype arp; # Allow ARP for device discovery
+  accept ipprotocol tcp and dport 3389; # Allow RDP port (TCP)
+  accept ipprotocol udp and dport 3389; # Allow RDP port (UDP)
+  accept ipprotocol udp and sport 3389; # Allow return traffic
+  ;
+
+# Accept anything else. This is required since default is 'drop':
+accept;
