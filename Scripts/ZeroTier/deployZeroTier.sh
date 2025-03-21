@@ -396,7 +396,7 @@ if $success; then
     # Authorize the device on the ZeroTier network
     log_message "Authorizing device on ZeroTier network"
     auth_response=$(api_call_with_retry -X POST "https://api.zerotier.com/api/v1/network/$ZEROTIER_NETWORK_ID/member/$member_id" \
-        -H "Authorization: Bearer $ZEROTIER_API_TOKEN" \
+        -H "Authorization: token $ZEROTIER_API_TOKEN" \
         -H "Content-Type: application/json" \
         -d '{"config":{"authorized":true}}')
 
@@ -424,7 +424,7 @@ if $success; then
     # Update the device name in ZeroTier Central
     log_message "Updating device name in ZeroTier Central"
     name_update_response=$(api_call_with_retry -X POST "https://api.zerotier.com/api/v1/network/$ZEROTIER_NETWORK_ID/member/$member_id" \
-        -H "Authorization: Bearer $ZEROTIER_API_TOKEN" \
+        -H "Authorization: token $ZEROTIER_API_TOKEN" \
         -H "Content-Type: application/json" \
         -d "{\"name\":\"$hostname\"}")
 
@@ -447,7 +447,7 @@ fi
 if slack_enabled; then
     # Get ZeroTier network name for Slack notification
     log_message "Retrieving ZeroTier network name"
-    network_info=$(api_call_with_retry -H "Authorization: Bearer $ZEROTIER_API_TOKEN" \
+    network_info=$(api_call_with_retry -H "Authorization: token $ZEROTIER_API_TOKEN" \
         "https://api.zerotier.com/api/v1/network/$ZEROTIER_NETWORK_ID")
     log_message "Network info API response: $network_info"
 
