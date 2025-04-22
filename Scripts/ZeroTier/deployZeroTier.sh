@@ -69,8 +69,8 @@ SLACK_WEBHOOK=""
 # Log file path (optional, default is /var/log/deployZeroTier.log)
 LOG_FILE="/var/log/deployZeroTier.log"
 
-# Full path to zerotier-cli (optional, default is /usr/local/bin/zerotier-cli)
-ZEROTIER_CLI="/usr/local/bin/zerotier-cli"
+# Full path to zerotier-cli (optional, default is /Library/Application Support/ZeroTier/One/zerotier-cli)
+ZEROTIER_CLI="/Library/Application Support/ZeroTier/One/zerotier-cli"
 
 #####
 # Functions
