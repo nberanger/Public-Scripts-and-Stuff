@@ -4,7 +4,7 @@
 # This script downloads and installs the latest CrowdStrike Falcon sensor
 # Designed for Mosyle MDM deployment.
 # 
-# A big thank you to Paul Chernoff for the original script that this is based on :D 
+# A big thank you to Paul Chernoff from Mac Admins Slack for the original script that this is based on :D 
 #
 # Includes Slack/Teams reporting functionality.
 # Version 2.0: Added SHA256 validation, API retries, and webhook validation.
