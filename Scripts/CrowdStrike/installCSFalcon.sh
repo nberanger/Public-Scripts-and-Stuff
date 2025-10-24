@@ -1,21 +1,26 @@
 #!/bin/bash
 
 # CrowdStrike Falcon Sensor Installation Script for macOS
-# This script downloads and installs the latest CrowdStrike Falcon sensor
+# This script downloads, installs, and licenses the latest CrowdStrike Falcon sensor
 # Designed for Mosyle MDM deployment.
 # 
 # A big thank you to Paul Chernoff from Mac Admins Slack for the original script that this is based on :D 
 #
 # Includes Slack/Teams reporting functionality.
-# Version 2.0: Added SHA256 validation, API retries, and webhook validation.
+# Version 2.2: Added CCID licensing step and corrected command.
 
 # -------------------------------------------------------------------
 # Configuration
 # -------------------------------------------------------------------
 
 # CrowdStrike API credentials - Replace with your actual credentials
-clientid="xxx"
-secret="xxx"
+clientid=""
+secret=""
+
+# --- !! REQUIRED !! ---
+# Add your CrowdStrike Customer ID with Checksum (CCID) here.
+# This is required to license the sensor after installation.
+crowdstrikeCID="YOUR_CCID_HERE"
 
 # --- Reporting Configuration ---
 # Add your webhook URLs here.
@@ -188,9 +193,16 @@ function webHookMessage() {
 log "Starting CrowdStrike Falcon sensor installation"
 
 # Validate credentials
-if [ "$clientid" = "XXX" ] || [ "$secret" = "XXX" ]; then
+if [ "$clientid" = "xxx" ] || [ "$secret" = "xxx" ]; then
     log "ERROR: CrowdStrike API credentials not configured. Please update clientid and secret variables."
     reportDetails="CrowdStrike API credentials not configured."
+    exit 1
+fi
+
+# Validate CCID
+if [ "$crowdstrikeCID" = "YOUR_CCID_HERE" ] || [ -z "$crowdstrikeCID" ]; then
+    log "ERROR: CrowdStrike CCID not configured. Please update crowdstrikeCID variable."
+    reportDetails="CrowdStrike CCID not configured."
     exit 1
 fi
 
@@ -319,6 +331,30 @@ log "Installing CrowdStrike Falcon sensor"
 install_result=$(/usr/sbin/installer -target / -pkg /private/tmp/${sensorname} 2>&1)
 if [ $? -eq 0 ]; then
     log "Installation completed successfully"
+    
+    # --- LICENSING STEP ---
+    falcon_tool="/Applications/Falcon.app/Contents/Resources/falconctl"
+    if [ -f "$falcon_tool" ]; then
+        log "Attempting to license sensor with provided CCID..."
+        # Use the 'license' command as per CrowdStrike documentation
+        licensing_result=$( "$falcon_tool" license "$crowdstrikeCID" 2>&1 )
+        
+        if [ $? -eq 0 ]; then
+            log "Sensor licensed successfully."
+        else
+            log "ERROR: Sensor licensing failed: $licensing_result"
+            reportDetails="Installation succeeded but licensing failed: $licensing_result"
+            /bin/rm -f /private/tmp/${sensorname}
+            exit 1
+        fi
+    else
+        log "ERROR: falconctl tool not found at $falcon_tool. Cannot license."
+        reportDetails="Installation succeeded but falconctl tool not found. Cannot license."
+        /bin/rm -f /private/tmp/${sensorname}
+        exit 1
+    fi
+    # --- END LICENSING STEP ---
+    
 else
     log "ERROR: Installation failed - $install_result"
     reportDetails="Installation failed. Installer output: $install_result"
@@ -332,11 +368,11 @@ log "Cleaning up temporary files"
 
 # Verify installation
 if [ -d "/Applications/Falcon.app" ]; then
-    log "CrowdStrike Falcon sensor installation verified"
+    log "CrowdStrike Falcon sensor installation and licensing verified"
     log "Installation completed successfully"
     # This is our final success state
     webhookStatus="Success"
-    reportDetails="CrowdStrike Falcon sensor was successfully installed."
+    reportDetails="CrowdStrike Falcon sensor was successfully installed and licensed."
     exit 0
 else
     log "ERROR: Installation verification failed - Falcon.app not found"
